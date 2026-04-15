@@ -1,0 +1,23 @@
+namespace AHH
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            double oppositeSide = ReadDouble("Enter the length of the opposite side: ");
+            double adjacentSide = ReadDouble("Enter the length of the adjacent side ");
+            
+            double result = CalcAngle(oppositeSide, adjacentSide);
+            Console.WriteLine($"The angle depression is {result:F2}∘");
+        }
+        static double CalcAngle(double oppositeSide, double adjacentSide)
+        {
+            return Math.Atan((double)oppositeSide / adjacentSide) * 180 / Math.PI;
+        }
+        static double ReadDouble(string message)
+        {
+            Console.Write(message);
+            return Convert.ToDouble(Console.ReadLine());
+        }
+    }
+}
