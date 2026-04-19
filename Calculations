@@ -1,1 +1,114 @@
+namespace GameDevPhysics
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine(" == Physics options == ");
+                Console.WriteLine("1. Projectile Motion");
+                Console.WriteLine("2. Free Fall");
+                Console.WriteLine("3. Acceleration");
+                Console.WriteLine("4. Exit");
+                Console.WriteLine("Choose 1-4: ");
 
+                string choice = Console.ReadLine();
+
+                if (choice == "4") break;
+
+                switch (choice)
+                {
+                    case "1":
+                        ProjectileMode();
+                        break;
+                    case "2":
+                        FreeFallMode();
+                        break;
+                    case "3":
+                        AccelerationMode();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice! Press Enter...");
+                        Console.ReadLine();
+                        break;
+                }
+            }
+
+        }
+        static void ProjectileMode()
+        {
+           double v0 = ReadDoubleInRange("Initial velocity (m/s): ", 0.0);
+
+           double range = (v0 * v0) / 9.81;
+           double maxHeight = (v0 * v0) / (2 * 9.81);
+           double flightTime = (2 * v0) / 9.81;
+
+           Console.WriteLine($"Initial Velocity: {v0:F2}m/s");
+           Console.WriteLine($"Range: {range:F1}m");
+           Console.WriteLine($"Height: {maxHeight:F1}m");
+           Console.WriteLine($"Flight time: {flightTime:F2}s");
+    
+           Console.ReadLine();
+        }
+        static void FreeFallMode()
+        {
+          double v0 = ReadDoubleInRange("Initial velocity (m/s): ", 0.0);
+          double time = ReadDoubleInRange("Time (s): ", 0.01);
+
+          double finalVelocity = v0 + ( time * 9.81);
+          double displacement = (v0 * time) + (9.81 * (time * time)) / 2;
+
+          Console.WriteLine($"Final Velocity: {finalVelocity:F2}m/s");
+          Console.WriteLine($"Displacement: {displacement:F2}m");
+          Console.WriteLine($"Initial Velocity: {v0:F2}m/s");
+          Console.WriteLine($"Time: {time:F2}s");
+
+          Console.ReadLine();       
+        }
+        static void AccelerationMode()
+        {
+          double v0 = ReadDoubleInRange("Initial velocity (m/s): ", 0.0);
+          double v1 = ReadDoubleInRange("Final velocity (m/s): ", 0.0);
+          double Time = ReadDoubleInRange("Time (s):", 0.01);
+
+          double acceleration = (v1 - v0) / Time;
+
+          Console.WriteLine($"Initial velocity: {v0:F2}m/s");
+          Console.WriteLine($"Final velocity: {v1:F2}m/s");
+          Console.WriteLine($"Time: {Time:F2}s");
+          Console.WriteLine($"Acceleration: {acceleration:F2}m/s²");
+
+          Console.ReadLine();
+        }
+        static double ReadDoubleInRange(string message, double min = 0.0, double max = double.MaxValue)
+        {
+            while (true)
+            {
+                Console.Write(message);
+                string input = Console.ReadLine();
+
+                try
+                {
+                    double value = Convert.ToDouble(input);
+
+                    if (value < min || value > max)
+                    {
+                        Console.WriteLine($"Must be between {min:F1} and {max:F1}!");
+                        continue;
+                    }
+                    return value;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid number! Enter valid number.");
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Number too large!");
+                }
+            }
+        }
+    }
+}
