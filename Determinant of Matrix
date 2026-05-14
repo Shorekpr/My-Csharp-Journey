@@ -1,0 +1,83 @@
+using System;
+using System.Linq;
+
+namespace Matrix;
+
+public static class Program
+{
+    public static void Main()
+    {
+        Console.WriteLine("Enter your matrix size");
+        Console.WriteLine("1: 2x2 Matrix");
+        Console.WriteLine("2: 3x3 Matrix");
+        Console.WriteLine("3: Exit");
+        switch (UserInput())
+        {
+            case 1:
+                int[,] matrix = GetMatrix2x2();
+                Console.WriteLine("Determinant: " + Det2x2(matrix));
+                break;
+            case 2:
+                int[,] matrix1 = GetMatrix3x3();
+                Console.WriteLine("Determinant: " + Det3x3(matrix1));
+                break;
+            case 3:
+                return;
+            default:
+                Console.WriteLine("Invalid number!");
+                break;
+        }   
+        
+            
+    }
+    static int[,] GetMatrix3x3()
+    {
+        int[,] matrix = new int[3, 3];
+
+        for (int k = 0; k < 3; k++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                Console.Write($"[{k},{j}]: ");
+                matrix[k, j] = Convert.ToInt32(Console.ReadLine());
+            }
+        }
+        return matrix;
+    }
+
+    static int[,] GetMatrix2x2()
+    {
+        int[,] matrix = new int[2, 2];
+
+        for (int p = 0; p < 2; p++) 
+        {
+            for (int o = 0; o < 2; o++)
+            {
+                Console.Write($"[{p},{o}]: ");
+                matrix[p, o] = Convert.ToInt32(Console.ReadLine());
+            }
+        }
+        return matrix;
+    }
+    
+    static int Det3x3(int[,] matrix1)
+    {
+        int det = (matrix1[0, 0] * (matrix1[1, 1] * matrix1[2, 2] - matrix1[1, 2] * matrix1[2, 1]))
+                  - (matrix1[0, 1] * (matrix1[1, 0] * matrix1[2, 2] - matrix1[2, 0] * matrix1[1, 2]))
+                  + (matrix1[0, 2] * (matrix1[1, 0] * matrix1[2, 1] - matrix1[2, 0] * matrix1[1, 1]));
+        return det;
+    }
+
+    static int Det2x2(int[,] matrix)
+    {
+        int det = (matrix[0, 0] * matrix[1, 1]) - (matrix[1, 0] * matrix[0, 1]);
+        return det;
+    }
+    static int UserInput()
+    {
+        int Userinput = Convert.ToInt32(Console.ReadLine());
+        return Userinput;
+    }
+
+
+}
